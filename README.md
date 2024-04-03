@@ -35,6 +35,13 @@ brew install safe-rm
 brew install gnu-sed
 brew install fd
 brew install fzf
+brew install gh
+```
+
+## GH - Git CLI
+You will need to run the command below to use [Project v2](https://docs.github.com/en/issues/planning-and-tracking-with-projects):
+```sh
+gh auth refresh -s read:project
 ```
 
 ## Language Server, Linters, DAPs and Formatters
