@@ -277,17 +277,24 @@ local function config()
         { "gi", desc = "Go to implementation" },
         { "gu", desc = "Go to usages/references" },
         {
+            desc = 'split [A]lternate'
+        },
+        {
             "gA",
             function()
-                vim.cmd(":w")
+                if vim.api.nvim_buf_get_option(0, 'modified') then
+                    vim.cmd(":w")
+                end
                 vim.cmd(":AS")
             end,
-            desc = 'split [A]lternate'
+            desc = 'buffer [A]lternate split'
         },
         {
             "ga",
             function()
-                vim.cmd(":w")
+                if vim.api.nvim_buf_get_option(0, 'modified') then
+                    vim.cmd(":w")
+                end
                 vim.cmd(":A")
             end,
             desc = 'buffer [a]lternate'
@@ -376,10 +383,15 @@ local function config()
     -- codeium
     wk.add({
         mode = { 'i' },
-        { "<c-;>", require('codeium.virtual_text').debounced_complete,                   desc = 'Codeium trigger suggestion' },
+        { "<c-;>", require('codeium.virtual_text').complete,                             desc = 'Codeium trigger suggestion' },
         { "<c-.>", function() require('codeium.virtual_text').cycle_or_complete(1) end,  desc = 'Codeium next suggestion' },
         { "<c-,>", function() require('codeium.virtual_text').cycle_or_complete(-1) end, desc = 'Codeium previous suggestion' },
         -- { "<c-y>", function() require('codeium.virtual_text').complete() end,            desc = 'Codeium accept suggestion' },
+
+    })
+    wk.add({
+        mode = { 'n' },
+        { "<c-;>", require('codeium.virtual_text').complete, desc = 'Codeium trigger suggestion' },
 
     })
 
