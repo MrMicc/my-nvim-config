@@ -5,7 +5,8 @@ local function config()
                 package_installed = "✓",
                 package_pending = "➜",
                 package_uninstalled = "✗"
-            }
+            },
+            border = nil
         }
     })
 
@@ -13,7 +14,7 @@ local function config()
         ensure_installed = {
             -- lsps
             { 'jdtls',                           auto_update = false },
-            { 'groovyls',                        auto_update = false },
+            { 'groovy-language-server',          auto_update = false },
             { 'npm-groovy-lint',                 auto_update = false },
             { 'pyright',                         auto_update = false },
             { 'lua-language-server',             auto_update = false },
@@ -65,12 +66,21 @@ local function config()
         automatic_setup = true,
         automatic_installation = true,
     })
-
-    -- require("mason-lspconfig").setup {
-    --     ensure_installed = { "lua_ls", "rust_analyzer" },
-    -- }
 end
 return {
+    {
+        "mason-org/mason-lspconfig.nvim",
+        config = function()
+            require("mason-lspconfig").setup {
+                ensure_installed = { "marksman", "lemminx", "groovyls" },
+                automatic_enable = {
+                    "lemminx",
+                    "marksman",
+                    "groovyls"
+                }
+            }
+        end,
+    },
     {
         'williamboman/mason.nvim',
         config = config,

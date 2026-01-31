@@ -1,4 +1,6 @@
-local vim_test_support = { "java" }
+local vim_test_support = {
+    "java",
+}
 
 local function config()
     -- TODO: check if this is still needed
@@ -77,7 +79,13 @@ local function config()
         -- normal, insert and visual mode
         {
             mode = { 'n', 'i', 'v' },
-            { "<F1>", function() dap.toggle_breakpoint() end, desc = 'Debug toggle breakpoint' },
+            {
+                "<F1>",
+                function()
+                    dap.toggle_breakpoint()
+                end,
+                desc = 'Debug toggle breakpoint'
+            },
             {
                 "<F2>",
                 function()
@@ -94,12 +102,12 @@ local function config()
                 end,
                 desc = 'Clear all breakpoints'
             },
-            { "<F4>", dapui.eval,                             desc = 'Debug eval' },
-            { "<F5>", dap.continue,                           desc = 'Debug continue or attach' },
-            { "<F6>", dap.step_into,                          desc = 'Debug step into' },
-            { "<F7>", dap.step_out,                           desc = 'Debug step out' },
-            { "<F8>", dap.step_over,                          desc = 'Debug step over' },
-            { "<F9>", dap.run_last,                           desc = 'Debug run last' },
+            { "<F4>", dapui.eval,    desc = 'Debug eval' },
+            { "<F5>", dap.continue,  desc = 'Debug continue or attach' },
+            { "<F6>", dap.step_into, desc = 'Debug step into' },
+            { "<F7>", dap.step_out,  desc = 'Debug step out' },
+            { "<F8>", dap.step_over, desc = 'Debug step over' },
+            { "<F9>", dap.run_last,  desc = 'Debug run last' },
         },
     })
     -- [<leader>u] - utils
@@ -166,8 +174,8 @@ local function config()
     wk.add({
         { "<leader>h",  group = "harpoon, hop" },
         { '<leader>ha', function() harpoon:list():add() end, desc = 'Harpoon add mark file' },
-        { '<leader>hh', hop.hint_words,                      desc = 'Hop words' },
-        { '<leader>hl', tsht.nodes,                          desc = 'Hop syntax' },
+        { '<leader>hw', hop.hint_words,                      desc = 'Hop words' },
+        { '<leader>hs', tsht.nodes,                          desc = 'Hop syntax' },
     })
 
     -- [<C-x>] - harpoon fast nav
@@ -227,15 +235,16 @@ local function config()
 
     wk.add({
         { "<leader>t",  group = "[t]esting" },
-        { '<leader>tb', vim.cmd.TagbarToggle,                                 desc = 'Toggle tagbar' },
-        { "<leader>tt", test_nearest,                                         desc = 'Run nearest [t]est' },
+        { '<leader>tb', vim.cmd.TagbarToggle,                                                desc = 'Toggle tagbar' },
+        { "<leader>tt", test_nearest,                                                        desc = 'Run nearest [t]est' },
         -- { "<leader>tc", test_class,                                           desc = 'Run [c]lasstests with vim-test' },
-        { "<leader>tf", test_file,                                            desc = 'Run [f]ile test' },
-        { "<leader>ta", test_suite,                                           desc = 'Run [s]uite tests' },
-        { "<leader>td", function() neotest.run.run({ strategy = 'dap' }) end, desc = '[d]ebug nearest test' },
-        { "<leader>ts", function() neotest.summary.toggle() end,              desc = 'Toggle tests [s]ummary' },
-        { "<leader>to", function() neotest.output_panel.toggle() end,         desc = 'Toggle tests [o]utput window' },
+        { "<leader>tf", test_file,                                                           desc = 'Run [f]ile test' },
+        { "<leader>ta", test_suite,                                                          desc = 'Run [s]uite tests' },
+        { "<leader>td", function() neotest.run.run({ suite = false, strategy = 'dap' }) end, desc = '[d]ebug nearest test' },
+        { "<leader>ts", function() neotest.summary.toggle() end,                             desc = 'Toggle tests [s]ummary' },
+        { "<leader>to", function() neotest.output_panel.toggle() end,                        desc = 'Toggle tests [o]utput window' },
     })
+
 
     wk.add({
         { "<leader>c",  group = "code" },
@@ -243,8 +252,8 @@ local function config()
         { "<leader>cf", desc = 'Code format' },
     })
 
-    vim.keymap.set("i", "<C-s>", function() vim.cmd("silent write") end, { silent = true })
-    vim.keymap.set("n", "<C-s>", function() vim.cmd("silent write") end, { silent = true })
+    -- vim.keymap.set("i", "<C-s>", function() vim.cmd("silent write") end, { silent = true })
+    -- vim.keymap.set("n", "<C-s>", function() vim.cmd("silent write") end, { silent = true })
 
     wk.add({
         { "<C-f>",      vim.cmd.NvimTreeFocus,                                  desc = 'Focus file' },
@@ -419,12 +428,12 @@ local function config()
             mode = { "v", "n" },
             { "<leader>c",   group = "ChatGPT" },
             { "<leader>cc",  "<cmd>ChatGPT<CR>",                                             desc = "ChatGPT Prompt" },
-            { "<c-g>",       "<cmd>ChatGPT<CR>",                                             desc = "ChatGPT Prompt" },
             { "<leader>ce",  vim.cmd.ChatGPTEditWithInstruction,                             desc = "Edit with instruction" },
             -- {{ "<leader>cc", "ma<S-g><S-v>gg0",                                              desc = "Edit with instruction" },
             { "<leader>cgg", function() vim.cmd.ChatGPTRun("grammar_correction") end,        desc = "Grammar Correction" },
             { "<leader>cgi", function() vim.cmd.ChatGPTRun("translate_into_italian") end,    desc = "Italian Translation" },
             { "<leader>cgs", function() vim.cmd.ChatGPTRun("translate_into_spanish") end,    desc = "Spanish Translation" },
+            { "<leader>cgc", function() vim.cmd.ChatGPTRun("translate_into_gherkin") end,    desc = "Cucumber Translation" },
             { "<leader>ck",  function() vim.cmd.ChatGPTRun("keywords") end,                  desc = "Keywords" },
             { "<leader>cd",  function() vim.cmd.ChatGPTRun("docstring") end,                 desc = "Docstring" },
             { "<leader>co",  function() vim.cmd.ChatGPTRun("optimize_code") end,             desc = "Optimize Code" },

@@ -72,9 +72,10 @@ vim.api.nvim_set_hl(0, 'DiagnosticUnderlineHint', {
     undercurl = false,
     underline = true,
 })
+
 vim.api.nvim_set_hl(0, 'TreesitterContext', { bg = 'none', fg = colors.purple })
 
-vim.api.nvim_set_hl(0, 'NvimTreeIndentMarker', { bg = 'none', fg = colors.yellow })
+-- vim.api.nvim_set_hl(0, 'NvimTreeIndentMarker', { bg = 'none', fg = colors.yellow })
 vim.api.nvim_set_hl(0, 'NvimTreeWinSeparator', { fg = colors.purple, bold = false })
 vim.api.nvim_set_hl(0, 'NvimTreeWindowPicker', { bg = colors.purple, fg = colors.black, bold = true })
 
@@ -215,3 +216,7 @@ vim.api.nvim_set_hl(0, "BufferLineBackground", {
     ctermfg = "NONE",
 })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none", nocombine = false })
+
+
+vim.api.nvim_set_hl(0, "@todo-comments.backlog",
+    { bg = "none", fg = colors.purple, force = true, nocombine = false, bold = true })

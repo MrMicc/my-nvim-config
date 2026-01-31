@@ -27,7 +27,8 @@ local java_21 = os.getenv "JAVA_21"
 local root_markers = { 'pom.xml', 'gradlew', 'mvnw', '.git', 'settings.gradle', '.lsp_root' }
 
 -- root dir, workspace and project name
-local root_dir = function() return require('jdtls.setup').find_root(root_markers) end
+-- local root_dir = function() return require('jdtls.setup').find_root(root_markers) end
+local root_dir = function() return vim.fs.root(0, root_markers) end
 
 -- project name is assumed by the folder name
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
@@ -136,6 +137,7 @@ local function get_settings()
             -- Specify any completion options
             completion = {
                 favoriteStaticMembers = {
+                    "org.assertj.core.api.Assertions.assertThat",
                     "org.awaitility.Awaitility.*",
                     "org.hamcrest.MatcherAssert.*",
                     "org.hamcrest.Matchers.*",
@@ -253,8 +255,8 @@ local function get_cmd()
         '-noverify',
         '-XX:TieredStopAtLevel=1',
         '-Dlog.level=ALL',
-        '-Xmx1G',
-        -- "-XX:+UseSerialGC",
+        '-Xmx3G',
+        "-XX:+UseShenandoahGC",
         '-javaagent:' .. lombok_jar,
         '--add-modules=ALL-SYSTEM',
         '--add-opens', 'java.base/java.util=ALL-UNNAMED',
@@ -267,6 +269,7 @@ local function get_cmd()
 end
 
 local jdtls_config = {
+    name = "jdtls",
     on_attach = on_attach_jdtls,
     capabilities = require('plugins.lsp.utils.capabilities_options').default,
     flags = {
@@ -281,6 +284,7 @@ local jdtls_config = {
 }
 -- Not working as expected
 -- require('lspconfig').jdtls.setup(jdtls_config)
+-- vim.lsp.config('jdtls', jdtls_config)
 
 local function jdtls_start_or_attach()
     jdtls.start_or_attach(jdtls_config)

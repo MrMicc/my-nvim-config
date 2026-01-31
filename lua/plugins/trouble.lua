@@ -3,13 +3,26 @@ return {
         "folke/trouble.nvim",
         event = 'VeryLazy',
         config = function()
-            require 'trouble'.setup { signs = {
-                error = conf.signs.error,
-                warning = conf.signs.warn,
-                hint = conf.signs.hint,
-                information = conf.signs.info,
-                other = conf.signs.other
-            }, }
+            require 'trouble'.setup {
+                follow = true,
+                auto_refresh = false,
+                modes = {
+                    diagnostics = { auto_open = true },
+                },
+                signs = {
+                    error = conf.signs.error,
+                    warning = conf.signs.warn,
+                    hint = conf.signs.hint,
+                    information = conf.signs.info,
+                    other = conf.signs.other
+                },
+                win = {
+                    size = 0.20,
+                    wo = {
+                        wrap = true,
+                    },
+                },
+            }
         end,
         cmd = "Trouble",
         keys = {
